@@ -93,10 +93,7 @@ function processXmlEd(xml, res, callback) {
         console.error('Something bad happened:', error.toString());
       });
     
-    
 }
-
-
 
 
 function addPriceTableElement(productId, price, amount) {
