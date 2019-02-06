@@ -1,0 +1,8 @@
+{
+    "env": {
+      "ORACLE_DB_USERNAME": "<ENTER VALUE HERE>",
+      "ORACLE_DB_PASSWORD": "<ENTER VALUE HERE>",
+      "ORACLE_DB_CONNECTION_STRING":"<ENTER VALUE HERE>"
+    }
+  }
+  

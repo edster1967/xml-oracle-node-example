@@ -1,0 +1,84 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<select id="selectBox" onchange="selectChanged()">
+    <option value="" selected>Select</option>
+    <option value="sampleHW">Sample Homework</option>
+    <option value="hw1" >homework 1</option>
+</select>
+<h3> sample homework </h3>
+
+<form class="form1" id="form1" action="">
+    <textarea rows="10" cols="100" id="textarea1"></textarea>
+    <input type="submit"/>
+</form> 
+
+<textarea id="result" rows="10" cols="100">
+
+</textarea>
+
+<script>
+    function selectChanged(){
+        let selectBoxValue = $( "#selectBox").val();
+        
+        $('#form1').attr('action' ,'/elnpoc/' + selectBoxValue );
+        
+        var textAreaValue = '';
+        if (selectBoxValue == 'sampleHW'){
+            textAreaValue= 
+`<note><to>Tove</to><from>Jani</from><heading>Reminder</heading><lines><line>this is line 1</line><line>this is line 2</line></lines></note>
+`;
+        }
+
+        if (selectBoxValue == 'hw1'){
+            textAreaValue= 
+`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<pricebooks xmlns="http://www.demandware.com/xml/impex/pricebook/2006-10-31">
+    <pricebook>
+        <header pricebook-id="usd-list-prices">
+            <currency>USD</currency>
+            <display-name xml:lang="x-default">List Prices</display-name>
+            <online-flag>true</online-flag>
+        </header>
+        <price-tables>
+            <price-table product-id="41ADZ22C912">
+                <amount quantity="1">149.99</amount>
+            </price-table>
+            <price-table product-id="13AQ92AP010">
+                <amount quantity="1">2499</amount>
+            </price-table>
+        </price-tables>
+	</pricebook>
+</pricebooks>
+`;
+        }
+
+        $('#textarea1').html(textAreaValue);
+
+    }
+
+$('#form1').submit(function(e) {
+    var form = $(this);
+    var xml1 = form.find( "textarea" ).text();
+    console.log(xml1);
+    var url = form.attr('action');
+    console.log(url);
+
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: xml1,
+        success: function(data)
+        {
+            $('#result').html(data);
+        },
+        error: function(data)
+        {
+            console.log('error: ' +  data);
+        }
+        });
+
+    e.preventDefault(); // avoid to execute the actual submit of the form.
+    });
+
+</script>
